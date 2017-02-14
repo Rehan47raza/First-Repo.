@@ -1,0 +1,103 @@
+public int registerDoctor(Doctor d) throws DuplicateDoctorException {
+		// TODO Auto-generated method stub
+		
+		for(Doctor doc:doctorList)
+		{
+			if(doc.getRegNo().equalsIgnoreCase(d.getRegNo()))
+			{
+				throw new DuplicateDoctorException();
+				
+			}
+		}
+		doctorList.add(d);
+		
+		return doctorList.size();
+	}
+	
+	public int hospitalizePatient(String regNo, Patient p) throws PatientExistException {
+		// TODO Auto-generated method stub
+		for(Doctor doc:doctorList)
+		{
+			if(doc.getRegNo().equalsIgnoreCase(regNo))
+			{
+				for(Patient pt: doc.getPatientList())
+				{
+					if(pt.getPatientId()==p.getPatientId())
+						throw new PatientExistException();
+				}
+				
+				doc.addPatient(p);
+				return doc.getPatientList().size();
+				
+			}
+		}
+		
+		
+		return -1;
+	}
+	
+	
+	public int releasePatient(int patientId) {
+		// TODO Auto-generated method stub
+		for(Doctor doc:doctorList)
+		{
+			
+				for(Patient pt: doc.getPatientList())
+				{
+					if(pt.getPatientId()==patientId)
+					{
+						doc.getPatientList().remove(patientId);
+						return doc.getPatientList().size();
+					}
+				}
+				
+				
+				
+				
+			
+		}
+		
+		return -1;
+	}
+	
+	public Doctor retrieveDoctorInfo(int patientId) {
+		// TODO Auto-generated method stub
+		for(Doctor doc:doctorList)
+		{
+			
+				for(Patient pt: doc.getPatientList())
+				{
+					if(pt.getPatientId()==patientId)
+					{
+						return doc;
+					}
+				}
+
+		}
+		
+		
+		return null;
+	}
+public int patientCountPerCity(String city) {
+		// TODO Auto-generated method stub
+		int count=0;
+		for(Doctor doc:doctorList)
+		{
+			
+				for(Patient pt: doc.getPatientList())
+				{
+					if(pt.getCity().equalsIgnoreCase(city))
+					{
+						count++;
+					}
+				}
+				
+				
+				
+				
+			
+		}
+		
+		return count;
+	}
+
